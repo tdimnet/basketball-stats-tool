@@ -12,5 +12,25 @@ def main():
     print(cleaned_players_data)
 
 
+def print_menu():
+    print("""
+    BASKETBALL TEAM STATS TOOL
+
+    ---- MENU----
+    
+    Here are your choices:
+      A) Display Team Stats
+      B) Quit
+    """)
+
+    user_choice = input("Enter an option:  ")
+
+    print("====")
+    print("The user choice is {}".format(user_choice))
+    print("====")
+
+    return user_choice
+
+
 if __name__ == "__main__":
-    main()
+    print_menu()
