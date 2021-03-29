@@ -23,20 +23,30 @@ def print_menu():
 
 def balance_teams(players):
     number_of_players_per_team = int(len(players) / len(TEAMS))
+
+    start_index = 0
+    end_index = number_of_players_per_team
     
     panthers_team = players[0:6]
     bandits_team = players[6:12]
     warriors_team = players[12:18]
 
-    print("+++++")
-    print(panthers_team)
-    print("+++++")
-    print("+++++")
-    print(bandits_team)
-    print("+++++")
-    print("+++++")
-    print(warriors_team)
-    print("+++++")
+    balanced_teams = list()
+
+    for team_name in TEAMS:
+        
+        team = {
+            "name": team_name,
+            "number_of_players": number_of_players_per_team,
+            "players": players[start_index:end_index]
+        }
+
+        balanced_teams.append(team)
+
+        start_index += number_of_players_per_team
+        end_index += number_of_players_per_team
+    
+    return balanced_teams
     
 
 
@@ -48,7 +58,11 @@ def main():
         'height': int(player.get('height')[:2])
     } for player in PLAYERS]
 
-    balance_teams(cleaned_players_data)
+    balanced_team = balance_teams(cleaned_players_data)
+
+    print("====")
+    print(balanced_team)
+    print("====")
 
 
 if __name__ == "__main__":
