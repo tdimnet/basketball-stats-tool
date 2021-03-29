@@ -1,24 +1,38 @@
 from constants import PLAYERS, TEAMS
 
 
-def print_menu():
+def cli(teams):
     print("""
     BASKETBALL TEAM STATS TOOL
 
-    ---- MENU----
+    ---- MENU ----
     
     Here are your choices:
       A) Display Team Stats
       B) Quit
     """)
 
-    user_choice = input("Enter an option:  ")
+    is_choosing = True
+
+    while is_choosing == True:
+        user_choice = input("Enter an option:  ")
+
+        if user_choice == "A":
+            is_choosing = False
+        elif user_choice == "B":
+            print("Thanks you for your visit!")
+            exit(0)
+        else:
+            print("Not ok")
+
+    for team in teams:
+        print("{}) {}".format(team["option"], team["name"]))
+
+    input_option = input("Please an option: ")
 
     print("====")
-    print("The user choice is {}".format(user_choice))
+    print("The input option is {}".format(input_option))
     print("====")
-
-    return user_choice
 
 
 def balance_teams(players):
@@ -33,9 +47,11 @@ def balance_teams(players):
 
     balanced_teams = list()
 
-    for team_name in TEAMS:
-        
+    for (index, team_name) in enumerate(TEAMS):
+        alphabetical_character = chr(65 + index)
+
         team = {
+            "option": alphabetical_character,
             "name": team_name,
             "number_of_players": number_of_players_per_team,
             "players": players[start_index:end_index]
@@ -60,9 +76,7 @@ def main():
 
     balanced_team = balance_teams(cleaned_players_data)
 
-    print("====")
-    print(balanced_team)
-    print("====")
+    cli(balanced_team)
 
 
 if __name__ == "__main__":
