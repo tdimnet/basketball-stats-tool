@@ -14,8 +14,8 @@ def cli(teams):
 
     is_choosing = True
 
-    while is_choosing == True:
-        user_choice = input("Enter an option:  ")
+    while is_choosing:
+        user_choice = input("Enter an option: ")
 
         if user_choice == "A":
             is_choosing = False
@@ -25,17 +25,30 @@ def cli(teams):
         else:
             print("Not ok")
 
+    is_looking_for_team = True
 
-    for team in teams:
-        print("{}) {}".format(team["option"], team["name"]))
+    while is_looking_for_team:
+        for team in teams:
+            print("{}) {}".format(team["option"], team["name"]))
 
-    input_option = input("Please an option: ")
+        input_option = input("Please select an option:")
 
-    filtered_team = list(filter(lambda team: team['option'] == input_option, teams))
+        filtered_team = list(filter(lambda team: team['option'] == input_option, teams))[0]
 
-    print("+++++")
-    print(filtered_team)
-    print("+++++")
+        if len(filtered_team) != 0:
+            
+            print("Team: {} Stats".format(filtered_team["name"]))
+            print("--------------------")
+            print("Total players: {}".format(filtered_team["number_of_players"]))
+            print("\n")
+            print("Players on Team:")
+            print("  List of players")
+
+            exit(0)
+        else:
+            print("Please choose an existing team")
+    
+    
 
 
 
