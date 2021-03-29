@@ -25,14 +25,18 @@ def cli(teams):
         else:
             print("Not ok")
 
+
     for team in teams:
         print("{}) {}".format(team["option"], team["name"]))
 
     input_option = input("Please an option: ")
 
-    print("====")
-    print("The input option is {}".format(input_option))
-    print("====")
+    filtered_team = list(filter(lambda team: team['option'] == input_option, teams))
+
+    print("+++++")
+    print(filtered_team)
+    print("+++++")
+
 
 
 def balance_teams(players):
