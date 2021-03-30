@@ -40,10 +40,10 @@ def display_teams_menu(teams):
             print("\nPlease choose an existing team\n")
 
     
-def clean_players_data(players_data):
+def clean_data(players_data):
     return [{
         'name': player.get('name'),
-        'guardians': player.get('guardians'),
+        'guardians': list(player.get('guardians').split(" and ")),
         'experience': True if player.get('experience') == 'YES' else False,
         'height': int(player.get('height')[:2])
     } for player in PLAYERS]
@@ -80,23 +80,28 @@ def balance_teams(players):
 
 
 def main():
-    cleaned_players_data = clean_players_data(PLAYERS)
-    balanced_teams = balance_teams(cleaned_players_data)
+    cleaned_players_data = clean_data(PLAYERS)
 
-    is_app_running = True
+    print("=====")
+    print(cleaned_players_data)
+    print("=====")
 
-    while is_app_running:
-        user_choice = display_menu()
+    # balanced_teams = balance_teams(cleaned_players_data)
 
-        if user_choice == "A":
-            display_teams_menu(balanced_teams)
+    # is_app_running = True
 
-            input("\nPress ENTER to continue...\n")
-        elif user_choice == "B":
-            print("Exit")
-            is_app_running = False
-        else:
-            print("Please choose a valid choice\n")
+    # while is_app_running:
+    #     user_choice = display_menu()
+
+    #     if user_choice == "A":
+    #         display_teams_menu(balanced_teams)
+
+    #         input("\nPress ENTER to continue...\n")
+    #     elif user_choice == "B":
+    #         print("Exit")
+    #         is_app_running = False
+    #     else:
+    #         print("Please choose a valid choice\n")
     
 
 
