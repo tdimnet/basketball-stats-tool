@@ -15,9 +15,11 @@ def display_menu():
 
 
 def display_team(team):
-    print("====")
-    print(team)
-    print("====")
+    print("\nTeam: {} Stats".format(team["name"]))
+    print("--------------------")
+    print("Total players {}\n".format(team["number_of_players"]))
+    print("Players on Team:")
+    print("  Thomas Dimnet, Jérôme Dimnet")
 
 
 def display_teams_menu(teams):
