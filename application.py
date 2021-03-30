@@ -1,55 +1,50 @@
 from constants import PLAYERS, TEAMS
 
 
-def cli(teams):
-    print("""
-    BASKETBALL TEAM STATS TOOL
+def display_menu():
+    print("BASKETBALL TEAM STATS TOOL\n")
+    print("---- MENU ----\n")
+    print("Here are your choices:")
+    print("  A) Display Team Stats")
+    print("  B) Quit\n")
 
-    ---- MENU ----
-    
-    Here are your choices:
-      A) Display Team Stats
-      B) Quit
-    """)
+    user_choice = input("Enter an option: ")
+    print("")
 
-    is_choosing = True
+    return user_choice
 
-    while is_choosing:
-        user_choice = input("Enter an option: ")
 
-        if user_choice == "A":
-            is_choosing = False
-        elif user_choice == "B":
-            print("Thanks you for your visit!")
-            exit(0)
-        else:
-            print("Not ok")
+def display_team(team):
+    print("====")
+    print(team)
+    print("====")
 
-    is_looking_for_team = True
 
-    while is_looking_for_team:
+def display_teams_menu(teams):
+    is_looking_for_a_team = True
+
+    while is_looking_for_a_team:
         for team in teams:
             print("{}) {}".format(team["option"], team["name"]))
 
-        input_option = input("Please select an option:")
-
-        filtered_team = list(filter(lambda team: team['option'] == input_option, teams))[0]
+        selected_team = input("\nPlease select an option: ")
+        filtered_team = list(filter(lambda team: team['option'] == selected_team, teams))
 
         if len(filtered_team) != 0:
-            
-            print("Team: {} Stats".format(filtered_team["name"]))
-            print("--------------------")
-            print("Total players: {}".format(filtered_team["number_of_players"]))
-            print("\n")
-            print("Players on Team:")
-            print("  List of players")
+            display_team(filtered_team[0])
 
-            exit(0)
+            is_looking_for_a_team = False
         else:
-            print("Please choose an existing team")
-    
-    
+            print("\nPlease choose an existing team\n")
 
+    
+def clean_players_data(players_data):
+    return [{
+        'name': player.get('name'),
+        'guardians': player.get('guardians'),
+        'experience': True if player.get('experience') == 'YES' else False,
+        'height': int(player.get('height')[:2])
+    } for player in PLAYERS]
 
 
 def balance_teams(players):
@@ -80,20 +75,27 @@ def balance_teams(players):
         end_index += number_of_players_per_team
     
     return balanced_teams
-    
 
 
 def main():
-    cleaned_players_data = [{
-        'name': player.get('name'),
-        'guardians': player.get('guardians'),
-        'experience': True if player.get('experience') == 'YES' else False,
-        'height': int(player.get('height')[:2])
-    } for player in PLAYERS]
+    cleaned_players_data = clean_players_data(PLAYERS)
+    balanced_teams = balance_teams(cleaned_players_data)
 
-    balanced_team = balance_teams(cleaned_players_data)
+    is_app_running = True
 
-    cli(balanced_team)
+    while is_app_running:
+        user_choice = display_menu()
+
+        if user_choice == "A":
+            display_teams_menu(balanced_teams)
+
+            input("\nPress ENTER to continue...\n")
+        elif user_choice == "B":
+            print("Exit")
+            is_app_running = False
+        else:
+            print("Please choose a valid choice\n")
+    
 
 
 if __name__ == "__main__":
