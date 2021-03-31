@@ -66,15 +66,16 @@ def clean_data(players_data):
     } for player in PLAYERS]
 
 
+def calculate_average_height(players):
+    list_of_players = [player["height"] for player in players]
+    return round(sum(list_of_players)/len(list_of_players), 1)
+
+
 def balance_teams(players):
     number_of_players_per_team = int(len(players) / len(TEAMS))
 
     start_index = 0
     end_index = number_of_players_per_team
-    
-    panthers_team = players[0:6]
-    bandits_team = players[6:12]
-    warriors_team = players[12:18]
 
     balanced_teams = list()
 
@@ -88,7 +89,7 @@ def balance_teams(players):
             "players": players[start_index:end_index],
             "number_of_experimented_players": 3,
             "number_of_unexperimented_players": 3,
-            "team_average_height": 42.5
+            "team_average_height": calculate_average_height(players[start_index:end_index])
         }
 
         balanced_teams.append(team)
