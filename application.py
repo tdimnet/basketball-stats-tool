@@ -15,11 +15,24 @@ def display_menu():
 
 
 def display_team(team):
+
+    players_in_team = ", ".join([player["name"] for player in team["players"]])
+    # I am sorry, this is not fully visible but I wanted to try using list comprehension within a list of a list
+    guardians_in_team = ", ".join( # This is the first level of the list / We loop here accross the players
+        [", ".join( # This the second level of the list / We loop here accross the guardians in the player dict
+            [guardian for guardian in player["guardians"]]
+        )for player in team["players"]]
+    )
+
     print("\nTeam: {} Stats".format(team["name"]))
     print("--------------------")
     print("Total players {}\n".format(team["number_of_players"]))
     print("Players on Team:")
-    print("  Thomas Dimnet, Jérôme Dimnet")
+    print("  {}".format(players_in_team))
+    print("Guardians:")
+    print("  {}".format(guardians_in_team))
+
+    
 
 
 def display_teams_menu(teams):
@@ -82,26 +95,26 @@ def balance_teams(players):
 def main():
     cleaned_players_data = clean_data(PLAYERS)
 
-    print("=====")
-    print(cleaned_players_data)
-    print("=====")
+    # print("=====")
+    # print(cleaned_players_data)
+    # print("=====")
 
-    # balanced_teams = balance_teams(cleaned_players_data)
+    balanced_teams = balance_teams(cleaned_players_data)
 
-    # is_app_running = True
+    is_app_running = True
 
-    # while is_app_running:
-    #     user_choice = display_menu()
+    while is_app_running:
+        user_choice = display_menu()
 
-    #     if user_choice == "A":
-    #         display_teams_menu(balanced_teams)
+        if user_choice == "A":
+            display_teams_menu(balanced_teams)
 
-    #         input("\nPress ENTER to continue...\n")
-    #     elif user_choice == "B":
-    #         print("Exit")
-    #         is_app_running = False
-    #     else:
-    #         print("Please choose a valid choice\n")
+            input("\nPress ENTER to continue...\n")
+        elif user_choice == "B":
+            print("Exit")
+            is_app_running = False
+        else:
+            print("Please choose a valid choice\n")
     
 
 
