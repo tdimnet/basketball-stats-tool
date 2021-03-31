@@ -26,7 +26,11 @@ def display_team(team):
 
     print("\nTeam: {} Stats".format(team["name"]))
     print("--------------------")
-    print("Total players {}\n".format(team["number_of_players"]))
+    print("Total players: {}".format(team["number_of_players"]))
+    print("Total experienced: {}".format(team["number_of_experimented_players"]))
+    print("Total inexperienced: {}".format(team["number_of_unexperimented_players"]))
+    print("Average height: {}\n".format(team["team_average_height"]))
+
     print("Players on Team:")
     print("  {}".format(players_in_team))
     print("Guardians:")
@@ -81,7 +85,10 @@ def balance_teams(players):
             "option": alphabetical_character,
             "name": team_name,
             "number_of_players": number_of_players_per_team,
-            "players": players[start_index:end_index]
+            "players": players[start_index:end_index],
+            "number_of_experimented_players": 3,
+            "number_of_unexperimented_players": 3,
+            "team_average_height": 42.5
         }
 
         balanced_teams.append(team)
