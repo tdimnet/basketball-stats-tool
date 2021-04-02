@@ -74,38 +74,48 @@ def calculate_average_height(players):
 def balance_teams(players):
     number_of_players_per_team = int(len(players) / len(TEAMS))
 
-    start_index = 0
-    end_index = number_of_players_per_team
+    experienced_players = list(filter(lambda player: player['experience'] == True, players))
+    number_of_experienced_players_per_team = int(len(experienced_players) / len(TEAMS))
+
+    inexperienced_players = list(filter(lambda player: player['experience'] == False, players))
+    number_of_inexperienced_players_per_team = int(len(inexperienced_players) / len(TEAMS))
+
+    start_index_experienced_players = 0
+    end_index_experienced_players = number_of_experienced_players_per_team
+    
+    start_index_inexperienced_players = 0
+    end_index_inexperienced_players = number_of_inexperienced_players_per_team
 
     balanced_teams = list()
 
     for (index, team_name) in enumerate(TEAMS):
         alphabetical_character = chr(65 + index)
 
+        players_in_team = experienced_players[start_index_experienced_players:end_index_experienced_players] + inexperienced_players[start_index_inexperienced_players:end_index_inexperienced_players]
+
         team = {
             "option": alphabetical_character,
             "name": team_name,
             "number_of_players": number_of_players_per_team,
-            "players": players[start_index:end_index],
-            "number_of_experimented_players": 3,
-            "number_of_unexperimented_players": 3,
-            "team_average_height": calculate_average_height(players[start_index:end_index])
+            "players": players_in_team,
+            "number_of_experimented_players": number_of_experienced_players_per_team,
+            "number_of_unexperimented_players": number_of_inexperienced_players_per_team,
+            "team_average_height": calculate_average_height(players)
         }
 
         balanced_teams.append(team)
 
-        start_index += number_of_players_per_team
-        end_index += number_of_players_per_team
+        start_index_experienced_players += number_of_experienced_players_per_team
+        end_index_experienced_players += number_of_experienced_players_per_team
+    
+        start_index_inexperienced_players += number_of_inexperienced_players_per_team
+        end_index_inexperienced_players += number_of_inexperienced_players_per_team
     
     return balanced_teams
 
 
 def main():
     cleaned_players_data = clean_data(PLAYERS)
-
-    # print("=====")
-    # print(cleaned_players_data)
-    # print("=====")
 
     balanced_teams = balance_teams(cleaned_players_data)
 
