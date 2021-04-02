@@ -15,11 +15,11 @@ def display_menu():
 
 
 def display_team(team):
-
     players_in_team = ", ".join([player["name"] for player in team["players"]])
-    # I am sorry, this is not fully visible but I wanted to try using list comprehension within a list of a list
-    guardians_in_team = ", ".join( # This is the first level of the list / We loop here accross the players
-        [", ".join( # This the second level of the list / We loop here accross the guardians in the player dict
+    # I am sorry, this is not fully visible but I wanted to
+    # try using list comprehension within a list of a list
+    guardians_in_team = ", ".join(
+        [", ".join(
             [guardian for guardian in player["guardians"]]
         )for player in team["players"]]
     )
@@ -27,16 +27,16 @@ def display_team(team):
     print("\nTeam: {} Stats".format(team["name"]))
     print("--------------------")
     print("Total players: {}".format(team["number_of_players"]))
-    print("Total experienced: {}".format(team["number_of_experimented_players"]))
-    print("Total inexperienced: {}".format(team["number_of_unexperimented_players"]))
+    print("Total experienced: {}".format(
+        team["number_of_experimented_players"]))
+    print("Total inexperienced: {}".format(
+        team["number_of_unexperimented_players"]))
     print("Average height: {}\n".format(team["team_average_height"]))
 
     print("Players on Team:")
     print("  {}".format(players_in_team))
     print("Guardians:")
     print("  {}".format(guardians_in_team))
-
-    
 
 
 def display_teams_menu(teams):
@@ -56,7 +56,7 @@ def display_teams_menu(teams):
         else:
             print("\nPlease choose an existing team\n")
 
-    
+
 def clean_data(players_data):
     return [{
         'name': player.get('name'),
@@ -74,15 +74,19 @@ def calculate_average_height(players):
 def balance_teams(players):
     number_of_players_per_team = int(len(players) / len(TEAMS))
 
-    experienced_players = list(filter(lambda player: player['experience'] == True, players))
-    number_of_experienced_players_per_team = int(len(experienced_players) / len(TEAMS))
+    experienced_players = list(filter(
+        lambda player: player['experience'] is True, players))
+    number_of_experienced_players_per_team = int(
+        len(experienced_players) / len(TEAMS))
 
-    inexperienced_players = list(filter(lambda player: player['experience'] == False, players))
-    number_of_inexperienced_players_per_team = int(len(inexperienced_players) / len(TEAMS))
+    inexperienced_players = list(filter(
+        lambda player: player['experience'] is False, players))
+    number_of_inexperienced_players_per_team = int(
+        len(inexperienced_players) / len(TEAMS))
 
     start_index_experienced_players = 0
     end_index_experienced_players = number_of_experienced_players_per_team
-    
+
     start_index_inexperienced_players = 0
     end_index_inexperienced_players = number_of_inexperienced_players_per_team
 
@@ -100,17 +104,17 @@ def balance_teams(players):
             "players": players_in_team,
             "number_of_experimented_players": number_of_experienced_players_per_team,
             "number_of_unexperimented_players": number_of_inexperienced_players_per_team,
-            "team_average_height": calculate_average_height(players)
+            "team_average_height": calculate_average_height(players_in_team)
         }
 
         balanced_teams.append(team)
 
         start_index_experienced_players += number_of_experienced_players_per_team
         end_index_experienced_players += number_of_experienced_players_per_team
-    
+
         start_index_inexperienced_players += number_of_inexperienced_players_per_team
         end_index_inexperienced_players += number_of_inexperienced_players_per_team
-    
+
     return balanced_teams
 
 
@@ -133,7 +137,6 @@ def main():
             is_app_running = False
         else:
             print("Please choose a valid choice\n")
-    
 
 
 if __name__ == "__main__":
